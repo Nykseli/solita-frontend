@@ -10,12 +10,12 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link href="/dataview">
           <v-list-item-action>
             <v-icon>mdi-cog</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Settings</v-list-item-title>
+            <v-list-item-title>Data View</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -28,7 +28,9 @@
 
     <v-main>
       <v-container class="fill-height" fluid>
-        <router-view></router-view>
+        <v-layout align-center justify-center>
+          <router-view></router-view>
+        </v-layout>
       </v-container>
     </v-main>
 
