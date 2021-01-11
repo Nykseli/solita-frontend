@@ -17,10 +17,10 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { NameCount } from "@/types";
+import { namesModule } from "@/store/namesModule";
 
 @Component({})
 export default class DataTable extends Vue {
-  public loading = false;
   public headers = [
     {
       text: "Name",
@@ -29,16 +29,18 @@ export default class DataTable extends Vue {
     },
     { text: "Amount", value: "amount" }
   ];
-  public names: Array<NameCount> = [
-    {
-      name: "Ville",
-      amount: 24
-    },
-    {
-      name: "Anna",
-      amount: 6
-    }
-  ];
+
+  get loading(): boolean {
+    return namesModule.loading;
+  }
+
+  get names(): Array<NameCount> {
+    return namesModule.data.names;
+  }
+
+  created() {
+    namesModule.getNameData();
+  }
 }
 </script>
 
