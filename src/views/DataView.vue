@@ -1,6 +1,9 @@
 <template>
   <div class="data-view">
-    <DataTable msg="Welcome to the data table :hypers" />
+    <div class="instructions">
+      <p>Order items by clicking "Name" or "Amount"</p>
+    </div>
+    <DataTable />
   </div>
 </template>
 

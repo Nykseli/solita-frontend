@@ -1,15 +1,28 @@
 <template>
   <div class="small">
-    <div v-if="loading" class="loading">Loading...</div>
-
-    <div v-if="names">
+    <v-card>
+      <v-card-title>
+        Name data
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
       <v-data-table
         :headers="headers"
         :items="names"
-        :items-per-page="30"
+        :items-per-page="10"
         class="elevation-1"
+        :loading="loading"
+        loading-text="Loading..."
+        :search="search"
+        dense="true"
       ></v-data-table>
-    </div>
+    </v-card>
   </div>
 </template>
 
@@ -21,6 +34,7 @@ import { namesModule } from "@/store/namesModule";
 
 @Component({})
 export default class DataTable extends Vue {
+  public search = "";
   public headers = [
     {
       text: "Name",
@@ -47,6 +61,6 @@ export default class DataTable extends Vue {
 <style>
 .small {
   max-width: 1200px;
-  margin: 150px auto;
+  /*  margin: 150px auto; */
 }
 </style>
