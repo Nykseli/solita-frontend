@@ -1,4 +1,4 @@
-import { getNamesTotal } from "@/utils/api";
+import { getNamesTotal, getNameAmount } from "@/utils/api";
 import store from "@/store";
 import { NameData } from "@/types";
 import {
@@ -13,7 +13,7 @@ export interface BackendState {
   orderedCount: NameData;
   orderedAlphabeth: NameData;
   totalCount: number;
-  perNameCount: number;
+  nameAmount: number;
   loading: boolean;
 }
 
@@ -23,7 +23,7 @@ export class BackendModule extends VuexModule implements BackendState {
   public orderedCount = {} as NameData;
   public orderedAlphabeth = {} as NameData;
   public totalCount = 0;
-  public perNameCount = 0;
+  public nameAmount = 0;
   public loading = true;
 
   @Action
@@ -34,6 +34,20 @@ export class BackendModule extends VuexModule implements BackendState {
       this.setTotalCount(res["total"]);
       this.setLoading(false);
     });
+  }
+
+  @Action
+  getNameAmount(name: string): void {
+    this.setLoading(true);
+    getNameAmount(name).then(res => {
+      this.setNameAmount(res["amount"]);
+      this.setLoading(false);
+    });
+  }
+
+  @Mutation
+  setNameAmount(amount: number): void {
+    this.nameAmount = amount;
   }
 
   @Mutation
