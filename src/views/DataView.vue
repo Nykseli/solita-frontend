@@ -2,6 +2,7 @@
   <div class="data-view">
     <div class="instructions">
       <p>Order items by clicking "Name" or "Amount"</p>
+      <p v-if="!loading">Total name amount {{ nameAmount }}</p>
     </div>
     <DataTable :loading="loading" :nameData="names" />
   </div>
@@ -25,6 +26,15 @@ export default class DataView extends Vue {
 
   get names(): NameData {
     return namesModule.data;
+  }
+
+  get nameAmount(): number {
+    let total = 0;
+    for (const name of namesModule.data.names) {
+      total += name.amount;
+    }
+
+    return total;
   }
 
   created() {
