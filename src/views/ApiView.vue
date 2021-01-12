@@ -12,7 +12,7 @@
           Ordered by name amount
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <DataTable />
+          <DataTable :loading="true" :nameData="{}" />
         </v-expansion-panel-content>
       </v-expansion-panel>
       <v-expansion-panel>
@@ -20,7 +20,7 @@
           In alphabetical order
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <DataTable />
+          <DataTable :loading="true" :nameData="{}" />
         </v-expansion-panel-content>
       </v-expansion-panel>
       <v-expansion-panel>

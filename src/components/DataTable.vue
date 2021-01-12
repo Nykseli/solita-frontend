@@ -20,7 +20,7 @@
         :loading="loading"
         loading-text="Loading..."
         :search="search"
-        dense="true"
+        :dense="true"
       ></v-data-table>
     </v-card>
   </div>
@@ -28,12 +28,14 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
-import { NameCount } from "@/types";
-import { namesModule } from "@/store/namesModule";
+import { Component, Prop } from "vue-property-decorator";
+import { NameData, NameCount } from "@/types";
 
 @Component({})
 export default class DataTable extends Vue {
+  @Prop() loading!: boolean;
+  @Prop() nameData!: NameData;
+
   public search = "";
   public headers = [
     {
@@ -44,16 +46,12 @@ export default class DataTable extends Vue {
     { text: "Amount", value: "amount" }
   ];
 
-  get loading(): boolean {
-    return namesModule.loading;
-  }
-
   get names(): Array<NameCount> {
-    return namesModule.data.names;
-  }
+    if (this.loading) {
+      return [];
+    }
 
-  created() {
-    namesModule.getNameData();
+    return this.nameData.names;
   }
 }
 </script>
