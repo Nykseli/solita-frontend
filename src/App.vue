@@ -2,20 +2,28 @@
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
-        <v-list-item link>
+        <v-list-item link @click="$router.push('/')">
           <v-list-item-action>
             <v-icon>mdi-view-dashboard</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
+            <v-list-item-title>Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link href="/dataview">
+        <v-list-item link @click="$router.push('/dataview')">
           <v-list-item-action>
             <v-icon>mdi-cog</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Data View</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link @click="$router.push('/apiview')">
+          <v-list-item-action>
+            <v-icon>mdi-api</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Api View</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
