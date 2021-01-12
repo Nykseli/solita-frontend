@@ -1,4 +1,9 @@
-import { getNamesTotal, getNameAmount } from "@/utils/api";
+import {
+  getNamesTotal,
+  getNameAmount,
+  getNameAlphabeticalOrder,
+  getNameAmountOrder
+} from "@/utils/api";
 import store from "@/store";
 import { NameData } from "@/types";
 import {
@@ -10,8 +15,10 @@ import {
 } from "vuex-module-decorators";
 
 export interface BackendState {
-  orderedCount: NameData;
-  orderedAlphabeth: NameData;
+  orderedAmount: NameData;
+  amountLoading: boolean;
+  orderedAlphabet: NameData;
+  alphabetLoading: boolean;
   totalCount: number;
   nameAmount: number;
   loading: boolean;
@@ -20,8 +27,10 @@ export interface BackendState {
 // Make module dynamic so it can be automatically initialized when it's needed
 @Module({ name: "backendModule", dynamic: true, store: store })
 export class BackendModule extends VuexModule implements BackendState {
-  public orderedCount = {} as NameData;
-  public orderedAlphabeth = {} as NameData;
+  public orderedAmount = {} as NameData;
+  public orderedAlphabet = {} as NameData;
+  public alphabetLoading = true;
+  public amountLoading = true;
   public totalCount = 0;
   public nameAmount = 0;
   public loading = true;
@@ -45,9 +54,47 @@ export class BackendModule extends VuexModule implements BackendState {
     });
   }
 
+  @Action
+  getNameAlphabeticalOrder(): void {
+    this.setAlphabetLoading(true);
+    getNameAlphabeticalOrder().then(res => {
+      this.setOrderedAlphabet(res);
+      this.setAlphabetLoading(false);
+    });
+  }
+
+  @Action
+  getNameAmountOrder(): void {
+    this.setAmountLoading(true);
+    getNameAmountOrder().then(res => {
+      this.setOrderedAmount(res);
+      this.setAmountLoading(false);
+    });
+  }
+
+  @Mutation
+  setOrderedAmount(data: NameData) {
+    this.orderedAmount = data;
+  }
+
+  @Mutation
+  setOrderedAlphabet(data: NameData) {
+    this.orderedAlphabet = data;
+  }
+
   @Mutation
   setNameAmount(amount: number): void {
     this.nameAmount = amount;
+  }
+
+  @Mutation
+  setAlphabetLoading(loading: boolean): void {
+    this.alphabetLoading = loading;
+  }
+
+  @Mutation
+  setAmountLoading(loading: boolean): void {
+    this.amountLoading = loading;
   }
 
   @Mutation

@@ -12,7 +12,7 @@
           Ordered by name amount
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <DataTable :loading="true" :nameData="{}" />
+          <DataTable :loading="amountLoading" :nameData="amountData" />
         </v-expansion-panel-content>
       </v-expansion-panel>
       <v-expansion-panel>
@@ -20,7 +20,7 @@
           In alphabetical order
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <DataTable :loading="true" :nameData="{}" />
+          <DataTable :loading="alphabetLoading" :nameData="alphabetData" />
         </v-expansion-panel-content>
       </v-expansion-panel>
       <v-expansion-panel>
@@ -38,6 +38,8 @@ import { Component, Vue } from "vue-property-decorator";
 import DataTable from "@/components/DataTable.vue";
 import NameAmount from "@/components/NameAmount.vue";
 import NamesTotal from "@/components/NamesTotal.vue";
+import { backendModule } from "@/store/backendModule";
+import { NameData } from "@/types";
 
 @Component({
   components: {
@@ -46,7 +48,28 @@ import NamesTotal from "@/components/NamesTotal.vue";
     NamesTotal
   }
 })
-export default class ApiView extends Vue {}
+export default class ApiView extends Vue {
+  get amountLoading(): boolean {
+    return backendModule.amountLoading;
+  }
+
+  get amountData(): NameData {
+    return backendModule.orderedAmount;
+  }
+
+  get alphabetLoading(): boolean {
+    return backendModule.alphabetLoading;
+  }
+
+  get alphabetData(): NameData {
+    return backendModule.orderedAlphabet;
+  }
+
+  created() {
+    backendModule.getNameAmountOrder();
+    backendModule.getNameAlphabeticalOrder();
+  }
+}
 </script>
 
 <style scoped>

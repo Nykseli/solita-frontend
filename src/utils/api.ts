@@ -1,5 +1,5 @@
 // Api for golang backend
-import { TODO } from "@/types";
+import { NameData, TODO } from "@/types";
 
 const apiEndpoint = "http://localhost:8888";
 
@@ -16,5 +16,21 @@ export function getNamesTotal(): Promise<TODO> {
  */
 export function getNameAmount(name: string): Promise<TODO> {
   const request = fetch(`${apiEndpoint}/name/amount/${name}`);
+  return request.then(response => response.json());
+}
+
+/**
+ * Get the name data in aphabetical order
+ */
+export function getNameAlphabeticalOrder(): Promise<NameData> {
+  const request = fetch(`${apiEndpoint}/name/sort/name`);
+  return request.then(response => response.json());
+}
+
+/**
+ * Get the name data in pupularity order
+ */
+export function getNameAmountOrder(): Promise<NameData> {
+  const request = fetch(`${apiEndpoint}/name/sort/amount`);
   return request.then(response => response.json());
 }
