@@ -1,15 +1,21 @@
 <template>
   <div>
-    <p>Total names: 211</p>
-    <v-row>
-      <v-btn elevation="2">Refresh</v-btn>
-    </v-row>
+    <p>Total names: {{ count }}</p>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { backendModule } from "@/store/backendModule";
 
 @Component
-export default class NamesTotal extends Vue {}
+export default class NamesTotal extends Vue {
+  get count(): number {
+    return backendModule.totalCount;
+  }
+
+  created() {
+    backendModule.getTotalCount();
+  }
+}
 </script>
